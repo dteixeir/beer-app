@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "_styleVariables.scss";
+
+html {
+  height: 100vh;
+
+  body {
+    margin: 0;
+    height: 100vh;
+  }
+
+  main,
+  .brewery-app { 
+    height: calc(100vh - 56px);
+    overflow-y: none;
+  }
+}
+
+.flex-fill {
+  display: flex;
+  flex: 1;
+}
+
+.content {
+  align-items: stretch;
+  display: flex;
+  flex: 1;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+
+  .flex-start {
+    justify-self: flex-start; 
+    margin-right: auto;
+  }
+  
+  .flex-end {
+    justify-self:flex-end;
+  }
+}
+

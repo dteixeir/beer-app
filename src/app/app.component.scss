@@ -1,0 +1,13 @@
+@import "./../styleVariables.scss";
+
+mat-sidenav-container{
+  height: 100vh;
+}
+
+mat-sidenav {
+  width: 250px;
+}
+
+body.noScroll { /* ...or body.dialogShowing */
+  overflow: hidden;
+}
