@@ -6,7 +6,8 @@ import { AuthGard } from '../auth/auth.gard';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
-  { path: 'brewery', loadChildren: '../brewery/brewery.module#BreweryModule'}
+  { path: 'brewery', loadChildren: '../brewery/brewery.module#BreweryModule' },
+  { path: 'beer', loadChildren: '../beer/beer.module#BeerModule'}
 
   // { path: 'training', loadChildren: './training/training.module#TrainingModule', canLoad: [ AuthGard ] }
 ];
