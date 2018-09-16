@@ -2,15 +2,12 @@
   <mat-sidenav 
     #sideNav
     mode="side" 
-    role="navigation" 
-  >
-
+    role="navigation">
     <app-side-nav-list (emit)="sideNav.close()"></app-side-nav-list>
-
   </mat-sidenav>
   <mat-sidenav-content >
     
-    <app-header (emit)="sideNav.toggle()"></app-header>
+    <app-header class="flex-fill" (emit)="sideNav.toggle()"></app-header>
     
     <main>
       <router-outlet></router-outlet>

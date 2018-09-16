@@ -1,11 +1,12 @@
-import { BeerActions, BeerActionTypes } from './beer.actions';
-import { IBeer } from './beer.model';
+import * as BeerActions from './beer.actions';
+
+import { IBeer } from '../shared/models';
 import * as fromRoot from '../app/app.reducer';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 // define new partial store
 export interface BeerState {
   beers: IBeer[];
+  selectedBeer: IBeer;
 }
 
 // extend store
@@ -15,16 +16,23 @@ export interface State extends fromRoot.State {
 
 // initial state
 const initialState: BeerState = {
-  beers: []
+  beers: [],
+  selectedBeer: null
 };
 
 // reducer
-export function beerReducer(state: State | BeerState = initialState, action: BeerActions) {
+export function beerReducer(state: State | BeerState = initialState, action: BeerActions.Actions) {
   switch (action.type) {
-    case BeerActionTypes.SET_BREWERIES:
+    case BeerActions.Types.SET_BEERS:
       return {
         ...state,
         beers: action.payload
+      };
+
+    case BeerActions.Types.SET_SELECTED_BEER:
+      return {
+        ...state,
+        selectedBeer: action.payload
       };
 
     default:
@@ -33,7 +41,3 @@ export function beerReducer(state: State | BeerState = initialState, action: Bee
       };
   }
 }
-
-export const getBeerState = createFeatureSelector<BeerState>('beer');
-
-export const getBeers = createSelector(getBeerState, (state: BeerState) => state.beers);

@@ -1,0 +1,17 @@
+<div fxLayoutAlign="center center">
+  <mat-form-field>
+    <input matInput type="text" [(ngModel)]="filterValue" (keyup)="_filter.next($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<mat-list *ngIf="(items$ | async).length" class="content" fxLayout="column" fxLayoutAlign="start stretch" role="list">
+  <mat-list-item *ngFor="let item of items$ | async; let last = last" (click)=select(item)>
+    <p class="mr-auto">{{item.name}}</p>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
+
+<div class="flex-row">
+  <button class="flex-start" (click)="previousPage()" [disabled]="hasPreviousPage()" mat-button color="primary">Previous</button>
+  <button class="flex-end" (click)="nextPage()" mat-button color="primary">Next</button>
+</div>

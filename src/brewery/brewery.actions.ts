@@ -1,14 +1,30 @@
 import { Action } from '@ngrx/store';
-import { IBrewery } from './brewery.model';
+import { IBrewery, IBeer } from '../shared/models';
 
-export enum BreweryActionTypes {
-  SET_BREWERIES = '[BREWERY]_SET_BREWERIES'
+export enum Types {
+  SET_COLLECTION = '[BREWERY]_SET_COLLECTION',
+  SET_SELECTED = '[BREWERY]_SET_SELECTED',
+  SET_SELECTED_BREWERY_BEERS = '[BREWERY]_SET_SELECTED_BREWERY_BEERS'
 }
 
-export class SetBreweries implements Action {
-  readonly type = BreweryActionTypes.SET_BREWERIES;
+export class SetCollection implements Action {
+  readonly type = Types.SET_COLLECTION;
 
   constructor(public payload: IBrewery[]) {}
 }
 
-export type BreweryActions = SetBreweries;
+export class SetSelected implements Action {
+  readonly type = Types.SET_SELECTED;
+
+  constructor(public payload: IBrewery) {}
+}
+
+export class SetSelectedBreweryBeers implements Action {
+  readonly type = Types.SET_SELECTED_BREWERY_BEERS;
+
+  constructor(public payload: IBeer[]) {}
+}
+
+export type Actions = SetCollection
+  | SetSelected
+  | SetSelectedBreweryBeers;

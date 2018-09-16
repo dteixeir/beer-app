@@ -13,6 +13,7 @@ import * as fromRoot from '../app/app.reducer';
 import * as UI from '../shared/ui.actions';
 import * as AUTH from './auth.actions';
 import * as USER from '../user/user.actions';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -21,16 +22,21 @@ export class AuthService extends BaseService {
     private router: Router,
     private afAuth: AngularFireAuth,
     protected uiService: UIService,
-    protected store: Store<fromRoot.State>
+    protected store: Store<fromRoot.State>,
+    protected db: AngularFirestore
   ) {
-    super(uiService, store);
+    super(
+      uiService,
+      store,
+      db
+    );
   }
 
   initAuthListner() {
     this.store.select(fromRoot.getIsAuthenticated)
       .subscribe(data => {
         if (data) {
-          this.router.navigate([ RouteNames.Breweries ]);
+          this.router.navigate([ RouteNames.Brewery ]);
         } else {
           // this.router.navigate([ RouteNames.Login ]);
         }

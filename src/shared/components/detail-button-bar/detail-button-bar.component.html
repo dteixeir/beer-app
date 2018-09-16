@@ -1,0 +1,10 @@
+<button [ngClass]="{ 'flex-center': !isAdmin, 'mr-auto': isAdmin }" 
+            class="flex-start" 
+            (click)="back()" 
+            mat-button 
+            color="primary">
+        Back</button>
+
+<button mat-button *ngIf="isAdmin" color="basic">Edit</button>
+
+<button mat-button *ngIf="isAdmin" color="warn">Delete</button>

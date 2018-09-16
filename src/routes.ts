@@ -4,7 +4,8 @@ const enum RouteNames {
   Signup = '/signup',
   Login = '/login',
   SignOut = '/login',
-  Breweries = '/brewery'
+  Brewery = '/brewery',
+  Beer = '/beer',
 }
 
 const Routes: Route[] = [
@@ -31,8 +32,15 @@ const Routes: Route[] = [
   },
   {
     url: '/brewery',
-    name: 'Breweries',
+    name: 'Brewery',
     iconName: 'location_city',
+    showIfAuthenticated: false,
+    dontShowIfAuthenticated: false
+  },
+  {
+    url: '/beer',
+    name: 'Beer',
+    iconName: '',
     showIfAuthenticated: false,
     dontShowIfAuthenticated: false
   }

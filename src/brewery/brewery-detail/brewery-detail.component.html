@@ -1,0 +1,23 @@
+<mat-card fxFlex.xs="100%" fxFlex="400px">
+  <mat-card-title fxLayoutAlign="center">{{ (brewery$ | async)?.name | titlecase }}</mat-card-title>
+  <mat-card-content fxLayout="column">
+    <div>
+      <b>City:</b> {{ (brewery$ | async)?.city || 'None Specified' | titlecase }}
+    </div>
+    <div>
+      <b>State:</b> {{ (brewery$ | async)?.state || 'None Specified' | titlecase }}
+    </div>
+    <div>
+      <b>Country:</b> {{ (brewery$ | async)?.country || 'None Specified' | titlecase }}
+    </div>
+    <div>
+      <b>Description:</b> {{ (brewery$ | async)?.description || 'None Specified' }}
+    </div>
+    
+  </mat-card-content>
+  <!-- turn the beer-collection component into something I can pass params into and reuse then use that HERE! -->
+
+  <mat-card-actions fxLayout="row" class="button-row">
+    <detail-button-bar></detail-button-bar>
+  </mat-card-actions>
+</mat-card>

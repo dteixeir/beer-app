@@ -18,11 +18,15 @@ export class UserService extends BaseService {
   public hasUser$: Observable<User>;
 
   constructor(
-    private db: AngularFirestore,
+    protected db: AngularFirestore,
     protected uiService: UIService,
     protected store: Store<fromRoot.State>
   ) {
-    super(uiService, store);
+    super(
+      uiService,
+      store,
+      db
+    );
 
     this.baseInit();
   }

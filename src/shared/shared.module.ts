@@ -7,9 +7,13 @@ import { FormsModule } from '@angular/forms';
 import { UIService } from '../shared/ui.service';
 import { BaseController } from './baseClasses/baseController';
 import { BaseService } from './baseClasses/baseService';
+import { BaseFirebaseService } from './baseClasses/baseFirebaseService';
+
+import * as SharedComponents from './components';
 
 export {
   BaseService,
+  BaseFirebaseService,
   BaseController,
   UIService
 };
@@ -22,13 +26,16 @@ export {
     FlexLayoutModule
   ],
   declarations: [
-
+    SharedComponents.CollectionComponent,
+    SharedComponents.DetailButtonBarComponent
   ],
   exports: [
     CommonModule,
     FormsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SharedComponents.CollectionComponent,
+    SharedComponents.DetailButtonBarComponent
   ],
   providers: [
     UIService

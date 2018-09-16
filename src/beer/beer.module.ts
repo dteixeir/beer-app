@@ -8,14 +8,17 @@ import { BeerRoutingModule } from './beer-routing.module';
 
 import { StoreModule } from '@ngrx/store';
 import { beerReducer } from './beer.reducer';
-import { BeerComponent } from './beer.component';
+import { BeerCollectionComponent } from './beer-collection/beer-collection.component';
+import { BeerDetailComponent } from './beer-detail/beer-detail.component';
 
 export {
-  BeerComponent
+  BeerCollectionComponent,
+  BeerDetailComponent
 };
 
 const components = [
-  BeerComponent
+  BeerCollectionComponent,
+  BeerDetailComponent
 ];
 
 @NgModule({

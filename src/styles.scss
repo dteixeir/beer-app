@@ -42,3 +42,18 @@ html {
   }
 }
 
+.mat-list {
+  overflow: scroll;
+}
+
+.button-row {
+  .mr-auto {
+    margin-right: auto !important;
+  }
+  
+  .flex-center {
+    align-self: center;
+    justify-self: center;
+    margin: auto !important;
+  }
+}

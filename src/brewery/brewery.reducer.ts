@@ -1,11 +1,11 @@
-import { BreweryActions, BreweryActionTypes } from './brewery.actions';
-import { IBrewery } from './brewery.model';
+import * as BreweryActions from './brewery.actions';
+import { IBrewery } from '../shared/models';
 import * as fromRoot from '../app/app.reducer';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 // define new partial store
 export interface BreweryState {
   breweries: IBrewery[];
+  selectedBrewery: IBrewery;
 }
 
 // extend store
@@ -15,16 +15,32 @@ export interface State extends fromRoot.State {
 
 // initial state
 const initialState: BreweryState = {
-  breweries: []
+  breweries: [],
+  selectedBrewery: null
 };
 
 // reducer
-export function breweryReducer(state: State | BreweryState = initialState, action: BreweryActions) {
+export function breweryReducer(state: BreweryState = initialState, action: BreweryActions.Actions ) {
   switch (action.type) {
-    case BreweryActionTypes.SET_BREWERIES:
+    case BreweryActions.Types.SET_COLLECTION:
       return {
         ...state,
         breweries: action.payload
+      };
+
+    case BreweryActions.Types.SET_SELECTED:
+      return {
+        ...state,
+        selectedBrewery: action.payload
+      };
+
+    case BreweryActions.Types.SET_SELECTED_BREWERY_BEERS:
+      return {
+        ...state,
+        selectedBrewery: {
+          ...state.selectedBrewery,
+          beers: action.payload
+        }
       };
 
     default:
@@ -33,7 +49,3 @@ export function breweryReducer(state: State | BreweryState = initialState, actio
       };
   }
 }
-
-export const getBreweryState = createFeatureSelector<BreweryState>('brewery');
-
-export const getBreweries = createSelector(getBreweryState, (state: BreweryState) => state.breweries);
