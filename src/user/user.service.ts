@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 import { Observable } from 'rxjs';
-import { takeUntil, take, skipUntil, skipWhile, tap } from 'rxjs/operators';
+import { takeUntil, take, skipUntil } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 

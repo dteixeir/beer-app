@@ -16,6 +16,21 @@
     
   </mat-card-content>
   <!-- turn the beer-collection component into something I can pass params into and reuse then use that HERE! -->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Beer List
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  
+    <app-collection
+      [items$]="beers$"
+      [service]="breweryService"
+      collectionName="breweries"
+      route="brewery"
+    ></app-collection>
+  
+  </mat-expansion-panel>
 
   <mat-card-actions fxLayout="row" class="button-row">
     <detail-button-bar></detail-button-bar>

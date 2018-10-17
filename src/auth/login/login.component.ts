@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { NgForm } from '@angular/forms';
-import { BaseController, UIService } from '../../shared/shared.module';
+import { BaseController } from '../../shared/shared.module';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app/app.reducer';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,19 +14,18 @@ import * as fromRoot from '../../app/app.reducer';
 export class LoginComponent extends BaseController implements OnInit {
   constructor(
     private authService: AuthService,
-    protected uiService: UIService,
     protected store: Store<fromRoot.State>
   ) {
     super(
-      store,
-      uiService
+      store
     );
   }
 
   ngOnInit(): void {
-    this.baseInit();
     this.authService.baseInit();
     this.authService.logout();
+
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
   }
 
   onSubmit(form: NgForm) {

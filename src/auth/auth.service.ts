@@ -77,9 +77,13 @@ export class AuthService extends BaseService {
       userAuth.email,
       userAuth.password
     ).then(() => {
-      this.store.dispatch(new UI.StopLoading());
+      setTimeout(() => {
+        this.store.dispatch(new UI.StopLoading());
+      }, 3000);
     }).catch(error => {
-      this.baseError(error);
+      setTimeout(() => {
+        this.baseError(error);
+      }, 3000);
     });
   }
 

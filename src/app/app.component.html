@@ -5,12 +5,17 @@
     role="navigation">
     <app-side-nav-list (emit)="sideNav.close()"></app-side-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content >
+  <mat-sidenav-content>
     
     <app-header class="flex-fill" (emit)="sideNav.toggle()"></app-header>
     
     <main>
-      <router-outlet></router-outlet>
+      <div class="wrapper">
+        <div class="overlay">
+          <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+        </div>
+        <router-outlet></router-outlet>
+      </div>
     </main>
 
   </mat-sidenav-content>

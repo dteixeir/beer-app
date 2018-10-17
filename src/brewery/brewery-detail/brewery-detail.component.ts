@@ -41,7 +41,8 @@ export class BreweryDetailComponent implements OnInit {
       .pipe(
         distinctUntilChanged((a: Brewery, b: Brewery) => {
           return !a || a.name === b.name;
-        })
+        }),
+        tap(val => console.log(val))
       )
       .subscribe(brewery => {
         if (brewery) {

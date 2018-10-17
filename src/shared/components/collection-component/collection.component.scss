@@ -5,3 +5,10 @@
   overflow: hidden;
   overflow-y: scroll;
 }
+
+mat-list-item {
+  cursor: pointer; 
+  &:hover {
+    background-color: darken(#fafafa, 10%);
+  }
+}
