@@ -1,24 +1,24 @@
-<mat-card fxFlex.xs="100%" fxFlex="400px">
-  <mat-card-title fxLayoutAlign="center">{{ (item$ | async)?.name | titlecase }}</mat-card-title>
-  <mat-card-content fxLayout="column">
+<mat-card class="d-flex f-1 flex-column" *ngIf="(item$ | async) as item">
+  <mat-card-title>{{ item?.name | titlecase }}</mat-card-title>
+  <mat-card-content class="flex-column">
     <div>
       <b>Brewery:</b>
     </div>
     <div>
-      <b>ABV:</b> {{ (item$ | async)?.abv || 'None Specified' }}
+      <b>ABV:</b> {{ item?.abv || 'None Specified' }}
     </div>
     <div>
-      <b>Style:</b> {{ (item$ | async)?.style?.name || 'None Specified' | titlecase }}
+      <b>Style:</b> {{ item?.style?.name || 'None Specified' | titlecase }}
     </div>
     <div>
-      <b>Category:</b> {{ (item$ | async)?.category?.name || 'None Specified' | titlecase }}
+      <b>Category:</b> {{ item?.category?.name || 'None Specified' | titlecase }}
     </div>
     <div>
-      <b>Description:</b> {{ (item$ | async)?.description || 'None Specified' }}
+      <b>Description:</b> {{ item?.description || 'None Specified' }}
     </div>
   </mat-card-content>
   
-  <mat-card-actions fxLayout="row" class="button-row">
+  <mat-card-actions class="flex-row" class="button-row">
     <detail-button-bar></detail-button-bar>
   </mat-card-actions>
 </mat-card>

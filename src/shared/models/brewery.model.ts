@@ -1,12 +1,13 @@
 import { IBase, Base } from '../baseClasses/base.model';
 import { Beer } from './beer.model';
+import { DocumentReference } from '@angular/fire/firestore';
 
 export interface IBrewery extends IBase {
   city: string;
   country: string;
   description: string;
   state: string;
-  beerIds: string[];
+  beerRefs: DocumentReference[];
   beers: Beer[];
 }
 
@@ -15,7 +16,7 @@ export class Brewery extends Base {
   country: string;
   description: string;
   state: string;
-  beerIds: string[];
+  beerRefs: DocumentReference[];
   beers: Beer[];
 
   constructor(brewery: IBrewery) {
@@ -26,7 +27,7 @@ export class Brewery extends Base {
     this.country = brewery.country;
     this.description = brewery.description;
     this.state = brewery.state;
-    this.beerIds = brewery.beerIds;
+    this.beerRefs = brewery.beerRefs;
     this.beers = [];
   }
 }

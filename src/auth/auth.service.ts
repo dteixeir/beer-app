@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { UserAuth } from './userAuth.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 import { RouteNames } from './../routes';
 import { BaseService } from '../shared/shared.module';
@@ -13,7 +12,9 @@ import * as fromRoot from '../app/app.reducer';
 import * as UI from '../shared/ui.actions';
 import * as AUTH from './auth.actions';
 import * as USER from '../user/user.actions';
-import { AngularFirestore } from 'angularfire2/firestore';
+
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable()
 export class AuthService extends BaseService {

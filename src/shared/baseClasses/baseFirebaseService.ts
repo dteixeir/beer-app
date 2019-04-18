@@ -3,12 +3,12 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app/app.reducer';
 import * as UiActions from '../ui.actions';
 import { UIService } from '../ui.service';
-import { DocumentChangeAction, AngularFirestore } from 'angularfire2/firestore';
 import { map, take, tap, switchMap, debounceTime, takeWhile } from 'rxjs/operators';
 import { IBase, Base } from './base.model';
 import { BaseService } from './baseService';
 import { IFirebasePager } from './firebase-pager.model';
 import { Router } from '@angular/router';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 
 export class BaseFirebaseService<IItem extends Base> extends BaseService {
   public isAuth$: Observable<boolean>;
@@ -42,7 +42,7 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
 
     this.setFilterObservable();
     this.setPageObservable();
-   }
+  }
 
   getListByIds(listIds: string[], collectionName: string): Observable<{}> {
     const observables: Observable<{}>[] = [];
@@ -75,9 +75,9 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
         tap(val => console.log('fetched beer from db')),
         take(1),
         this.pipeMapType()
-    ).subscribe((beer: IItem) => {
-      this.store.dispatch(new this.actions.SetSelected(beer))
-    });
+      ).subscribe((beer: IItem) => {
+        this.store.dispatch(new this.actions.SetSelected(beer))
+      });
   }
 
   private getCollection(): void {
@@ -101,7 +101,7 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
 
   setSelected(item: IItem, selectedRoute: string) {
     this.store.dispatch(new this.actions.SetSelected(item));
-    this.router.navigate([ selectedRoute, '/' + item.id ]);
+    this.router.navigate([selectedRoute, '/' + item.id]);
   }
 
   filter(filterValue: string) {
@@ -142,12 +142,9 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
     this.filterItems$.pipe(
       debounceTime(this.debounceTime),
       takeWhile(filterValue => filterValue != null || filterValue !== ''),
-      switchMap(filterValue => {
-        return this.getFilterQuery(filterValue);
-      }),
+      switchMap(filterValue => this.getFilterQuery(filterValue)),
       this.pipeMapArray()
-    )
-    .subscribe((items: IItem[]) => {
+    ).subscribe((items: IItem[]) => {
       this.store.dispatch(new UiActions.StopLoading());
       this.store.dispatch(new this.actions.SetCollection(items));
     }, (error) => this.baseError(error, 'Fetching items failed'));
@@ -158,10 +155,9 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
       .pipe(
         take(1),
         tap(val => console.log('fetched items from db'))
-      )
-      .subscribe((items: IItem[]) => {
+      ).subscribe((items: IItem[]) => {
         this.itemNames.push(items[0].name);
-        const newFirebasePager: IFirebasePager = { name: items[ items.length - 1 ].name, pageDirection: 'next' };
+        const newFirebasePager: IFirebasePager = { name: items[items.length - 1].name, pageDirection: 'next' };
         this._changePage.next(newFirebasePager);
       });
   }
@@ -171,9 +167,8 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
       .pipe(
         take(1),
         tap(val => console.log('fetched items from db'))
-      )
-      .subscribe((items: IItem[]) => {
-        const newFirebasePager: IFirebasePager = { name: items[ 0 ].name, pageDirection: 'previous' };
+      ).subscribe((items: IItem[]) => {
+        const newFirebasePager: IFirebasePager = { name: items[0].name, pageDirection: 'previous' };
         this._changePage.next(newFirebasePager);
       });
   }
@@ -196,7 +191,7 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
               .startAfter(firebasePager.name))
             .snapshotChanges();
         } else {
-          const name = this.itemNames[ this.itemNames.length - 1 ];
+          const name = this.itemNames[this.itemNames.length - 1];
           this.itemNames.pop();
           return this.db
             .collection(this.collectionName, ref => ref

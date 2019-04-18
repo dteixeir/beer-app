@@ -1,5 +1,4 @@
 import { Store } from '@ngrx/store';
-import { AngularFirestore } from 'angularfire2/firestore';
 
 import { Observable } from 'rxjs';
 import { takeUntil, take, skipUntil } from 'rxjs/operators';
@@ -12,6 +11,7 @@ import { User } from './user.model';
 
 import * as fromRoot from '../app/app.reducer';
 import { Constants } from '../constants';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable()
 export class UserService extends BaseService {

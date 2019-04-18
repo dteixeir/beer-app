@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app/app.reducer';
 import * as UiActions from '../ui.actions';
 import { UIService } from '../ui.service';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { skipWhile } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable()
 export class BaseService {

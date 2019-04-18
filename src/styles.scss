@@ -57,3 +57,23 @@ html {
     margin: auto !important;
   }
 }
+
+.f-1 {
+  flex: 1;
+}
+
+mat-list-item {
+  &.selectable {
+    cursor: pointer; 
+    &:hover {
+      background-color: darken(#fafafa, 10%);
+    }
+  }
+  
+  &.f-1 {
+    .mat-list-item-content {
+      display: flex;
+      flex: 1;
+    }
+  }
+}

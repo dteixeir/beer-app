@@ -1,17 +1,17 @@
-<mat-card fxFlex.xs="100%" fxFlex="400px">
-  <mat-card-title fxLayoutAlign="center">{{ (brewery$ | async)?.name | titlecase }}</mat-card-title>
-  <mat-card-content fxLayout="column">
+<mat-card *ngIf="(brewery$ | async) as brewery">
+  <mat-card-title>{{ brewery?.name | titlecase }}</mat-card-title>
+  <mat-card-content class="flex-column">
     <div>
-      <b>City:</b> {{ (brewery$ | async)?.city || 'None Specified' | titlecase }}
+      <b>City:</b> {{ brewery?.city || 'None Specified' | titlecase }}
     </div>
     <div>
-      <b>State:</b> {{ (brewery$ | async)?.state || 'None Specified' | titlecase }}
+      <b>State:</b> {{ brewery?.state || 'None Specified' | titlecase }}
     </div>
     <div>
-      <b>Country:</b> {{ (brewery$ | async)?.country || 'None Specified' | titlecase }}
+      <b>Country:</b> {{ brewery?.country || 'None Specified' | titlecase }}
     </div>
     <div>
-      <b>Description:</b> {{ (brewery$ | async)?.description || 'None Specified' }}
+      <b>Description:</b> {{ brewery?.description || 'None Specified' }}
     </div>
     
   </mat-card-content>
@@ -23,16 +23,18 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
   
-    <app-collection
-      [items$]="beers$"
-      [service]="breweryService"
-      collectionName="breweries"
-      route="brewery"
-    ></app-collection>
+    <mat-list *ngIf="(beers$ | async) as items" class="content flex-column" role="list">
+      <mat-list-item *ngFor="let item of items; let last = last"
+        class="d-flex f-1"
+      >
+        {{item.name}}
+        <mat-divider *ngIf="!last"></mat-divider>
+      </mat-list-item>
+    </mat-list>
   
   </mat-expansion-panel>
 
-  <mat-card-actions fxLayout="row" class="button-row">
+  <mat-card-actions class="flex-row" class="button-row">
     <detail-button-bar></detail-button-bar>
   </mat-card-actions>
 </mat-card>

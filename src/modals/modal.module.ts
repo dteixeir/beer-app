@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
@@ -16,8 +15,7 @@ const components = [
 @NgModule({
   imports: [
     MaterialModule,
-    CommonModule,
-    FlexLayoutModule
+    CommonModule
   ],
   exports: components,
   declarations: components,

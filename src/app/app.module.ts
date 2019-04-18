@@ -1,13 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../material.module';
-
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducer';
@@ -26,6 +22,10 @@ import { ModalModule } from '../modals/modal.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UserModule, UserService } from '../user/user.module';
 
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+
+
 
 @NgModule({
   declarations: [
@@ -40,11 +40,12 @@ import { UserModule, UserService } from '../user/user.module';
     AuthModule,
     BrowserAnimationsModule,
     BrowserModule,
-    FlexLayoutModule,
     MaterialModule,
     ModalModule,
     StoreModule.forRoot(reducers),
-    StoreDevtoolsModule.instrument(),
+    StoreDevtoolsModule.instrument({
+      maxAge: 20
+    }),
 
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase)

@@ -2,7 +2,6 @@ import { take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { AngularFirestore } from 'angularfire2/firestore';
 
 import { IBrewery, Brewery, IBeer } from '../shared/models';
 import * as BreweryActions from './brewery.actions';
@@ -13,6 +12,7 @@ import { UIService } from '../shared/ui.service';
 import { BaseFirebaseService } from '../shared/shared.module';
 import { Router } from '@angular/router';
 import { ICollectionService } from '../shared/interfaces/collection-service.interface';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable()
 export class BreweryService extends BaseFirebaseService<IBrewery> implements ICollectionService {
@@ -37,12 +37,13 @@ export class BreweryService extends BaseFirebaseService<IBrewery> implements ICo
 
   getBreweryBeers(brewery) {
     const newBrewery = new Brewery(brewery);
-    this.getListByIds(newBrewery.beerIds, 'beers')
-      .pipe(take(1))
-      .subscribe((val: IBeer[]) => {
-        newBrewery.beers = val;
+    newBrewery.beerRefs[0].get().then(doc => console.log(doc.data()))
+    // this.getListByIds(newBrewery.beerRefs, 'beers')
+    //   .pipe(take(1))
+    //   .subscribe((val: IBeer[]) => {
+    //     newBrewery.beers = val;
 
-        this.store.dispatch(new BreweryActions.SetSelectedBreweryBeers(val));
-      });
+    //     this.store.dispatch(new BreweryActions.SetSelectedBreweryBeers(val));
+    //   });
   }
 }
