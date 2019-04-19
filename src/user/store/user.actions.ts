@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User } from './user.model';
+import { IUser } from './user.interface';
 
 export enum UserActionTypes {
   SET_USER = '[USER]_SET_USER',
@@ -9,13 +9,13 @@ export enum UserActionTypes {
 export class SetUser implements Action {
   readonly type = UserActionTypes.SET_USER;
 
-  constructor(public payload: User) { }
+  constructor(public payload: IUser) { }
 }
 
 export class CreateUserAccount implements Action {
   readonly type = UserActionTypes.CREATE_USER_ACCOUNT;
 
-  constructor(public payload: User) { }
+  constructor(public payload: IUser) { }
 }
 
 export type UserActions = SetUser

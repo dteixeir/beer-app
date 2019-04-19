@@ -1,2 +1,2 @@
-export * from './navigation/route.model';
-export * from './user/user.model';
+export * from './navigation/route.interface';
+export * from './user/store/user.interface';

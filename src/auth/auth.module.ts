@@ -8,22 +8,20 @@ import { SignupComponent } from './signup/signup.component';
 import { AuthService } from './auth.service';
 import { UIService } from '../shared/ui/ui.service';
 
-import { AuthRoutingModule } from './auth-routing.module';
-
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { Routes, RouterModule } from '@angular/router';
 
-export {
-  LoginComponent,
-  SignupComponent,
-  AuthService
-};
+const routes: Routes = [
+  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent },
+];
 
 @NgModule({
   imports: [
-    AuthRoutingModule,
-    ReactiveFormsModule,
-    AngularFireAuthModule,
-    SharedModule
+    ReactiveFormsModule
+    , AngularFireAuthModule
+    , SharedModule
+    , RouterModule.forChild(routes)
   ],
   declarations: [
     LoginComponent,

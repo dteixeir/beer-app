@@ -5,17 +5,17 @@ import { takeUntil, take, skipUntil } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 
-import { BaseService } from '../shared/shared.module';
 import { UIService } from '../shared/ui/ui.service';
-import { User } from './user.model';
+import { IUser } from './store/user.interface';
 
-import * as fromRoot from '../app/app.reducer';
-import { Constants } from '../constants';
+import * as fromRoot from '../app/store/app.reducer';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { BaseService } from '@shared/baseClasses';
+import { COLLECTIONS } from 'src/constants';
 
 @Injectable()
 export class UserService extends BaseService {
-  public hasUser$: Observable<User>;
+  public hasUser$: Observable<IUser>;
 
   constructor(
     protected db: AngularFirestore,
@@ -38,7 +38,7 @@ export class UserService extends BaseService {
         takeUntil(this.isAuth$)
       )
       .subscribe(user => {
-        this.db.collection(Constants.Collections.USERS)
+        this.db.collection(COLLECTIONS.USERS)
           .doc(user.userId)
           .snapshotChanges()
           .pipe(
@@ -53,7 +53,7 @@ export class UserService extends BaseService {
       }, (error) => this.baseError(error));
   }
 
-  createUserEntity(user: User) {
+  createUserEntity(user: IUser) {
     this.db.doc(`users/${user.userId}`).set({
       userId: user.userId,
       email: user.email

@@ -1,5 +1,5 @@
 import * as BreweryActions from './brewery.actions';
-import * as fromRoot from '../../app/app.reducer';
+import * as fromRoot from '../../app/store/app.reducer';
 import { IBrewery } from './brewery.model';
 
 // define new partial store

@@ -11,6 +11,16 @@
       ],
       "@shared/*": [
         "src/shared/*"
+        , "src/shared/shared.module"
+      ],
+      "@fromAuth": [
+        "src/auth/store/index"
+      ],
+      "@fromUser": [
+        "src/user/store/index"
+      ],
+      "@fromRoot":[
+        "src/app/store/index"
       ]
     },
     "importHelpers": true,

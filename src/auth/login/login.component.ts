@@ -1,24 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { BaseController } from '../../shared/shared.module';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../app/app.reducer';
-import { from } from 'rxjs';
+
+import { BaseController } from '@shared/baseClasses';
+
+import { State } from '@fromAuth';
+import { AuthService } from '../auth.service';
+import * as fromRoot from '../../app/store/app.reducer';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.scss' ]
 })
-export class LoginComponent extends BaseController implements OnInit {
+export class LoginComponent extends BaseController<State> implements OnInit {
   constructor(
     private authService: AuthService,
-    protected store: Store<fromRoot.State>
+    protected store: Store<State>
   ) {
-    super(
-      store
-    );
+    super(store);
   }
 
   ngOnInit(): void {

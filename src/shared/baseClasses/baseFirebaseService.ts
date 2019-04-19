@@ -1,14 +1,16 @@
-import { Observable, forkJoin, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../app/app.reducer';
-import * as UiActions from '../ui/ui.actions';
-import { UIService } from '../ui/ui.service';
-import { map, take, tap, switchMap, debounceTime, takeWhile } from 'rxjs/operators';
-import { IBase } from '../interfaces/base.interface';
-import { BaseService } from './baseService';
-import { IFirebasePager } from './firebase-pager.model';
 import { Router } from '@angular/router';
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
+
+import { Observable, forkJoin, Subject } from 'rxjs';
+import { map, take, tap, switchMap, debounceTime, takeWhile } from 'rxjs/operators';
+
+import * as fromRoot from '../../app/store/app.reducer';
+import * as UiActions from '../ui/ui.actions';
+import { UIService } from '../ui/ui.service';
+import { IBase } from './base.interface';
+import { BaseService } from './baseService';
+import { IFirebasePager } from './firebase-pager.interface';
 
 export class BaseFirebaseService<IItem extends IBase> extends BaseService {
   public isAuth$: Observable<boolean>;
@@ -154,6 +156,8 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
   }
 
   pageNext() {
+    // this.store.dispatch(new this.a)
+
     this.store.select(this.selectors.getItems)
       .pipe(
         take(1),

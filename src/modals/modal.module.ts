@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../shared/material.module';
 
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
@@ -14,8 +14,8 @@ const components = [
 
 @NgModule({
   imports: [
-    MaterialModule,
-    CommonModule
+    MaterialModule
+    , CommonModule
   ],
   exports: components,
   declarations: components,

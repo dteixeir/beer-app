@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { Route } from './../../model.index';
-import { Routes } from '../../routes';
-
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../app/app.reducer';
+import * as fromRoot from '@fromRoot';
+
+import { Routes } from '../../routes';
+import { IRoute } from '../route.interface';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +12,7 @@ import * as fromRoot from '../../app/app.reducer';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  routes: Route[] = Routes;
+  routes: IRoute[] = Routes;
   isAuthenticated$: Observable<boolean>;
   @Output() emit = new EventEmitter<void>();
 

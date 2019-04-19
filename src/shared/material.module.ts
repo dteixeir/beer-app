@@ -23,26 +23,26 @@ import {
 } from '@angular/material';
 
 const components = [
-  MatButtonModule,
-  MatIconModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatCheckboxModule,
-  MatSidenavModule,
-  MatToolbarModule,
-  MatListModule,
-  MatTabsModule,
-  MatCardModule,
-  MatSelectModule,
-  MatProgressSpinnerModule,
-  MatDialogModule,
-  MatTableModule,
-  MatSortModule,
-  MatPaginatorModule,
-  MatSnackBarModule,
-  MatExpansionModule
+  MatButtonModule
+  , MatIconModule
+  , MatFormFieldModule
+  , MatInputModule
+  , MatDatepickerModule
+  , MatNativeDateModule
+  , MatCheckboxModule
+  , MatSidenavModule
+  , MatToolbarModule
+  , MatListModule
+  , MatTabsModule
+  , MatCardModule
+  , MatSelectModule
+  , MatProgressSpinnerModule
+  , MatDialogModule
+  , MatTableModule
+  , MatSortModule
+  , MatPaginatorModule
+  , MatSnackBarModule
+  , MatExpansionModule
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
-import { AuthActions, AuthActionTypes } from './auth.actions';
+import * as actions from './auth.actions';
+import { Action } from '@ngrx/store';
 
 export interface State {
   isAuthenticated: boolean;
@@ -8,15 +9,19 @@ const initialState: State = {
   isAuthenticated: false
 };
 
-export function reducer(state: State = initialState, action: AuthActions) {
+// selectors
+export const getIsAuthenticated = (state: State) => state.isAuthenticated;
+
+// reducer
+export function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
-    case AuthActionTypes.SET_AUTHENTICATED:
+    case actions.SET_AUTHENTICATED:
       return {
         ...state,
         isAuthenticated: true
       };
 
-    case AuthActionTypes.SET_UNAUTHENTICATED:
+    case actions.SET_UNAUTHENTICATED:
       return {
         ...state,
         isAuthenticated: false
@@ -26,5 +31,3 @@ export function reducer(state: State = initialState, action: AuthActions) {
       return { ...state };
   }
 }
-
-export const getIsAuthenticated = (state: State) => state.isAuthenticated;

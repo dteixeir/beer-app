@@ -1,6 +1,6 @@
-import * as fromUI from '../shared/ui/ui.reducer';
-import * as fromAuth from '../auth/auth.reducer';
-import * as fromUser from '../user/user.reducer';
+import * as fromUI from '@shared/ui';
+import * as fromAuth from '@fromAuth';
+import * as fromUser from '../../user/store/user.reducer';
 
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 

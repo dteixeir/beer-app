@@ -1,5 +1,5 @@
-export * from '../interfaces/base.interface';
+export * from './base.interface';
 export * from './baseController';
 export * from './baseFirebaseService';
 export * from './baseService';
-export * from './firebase-pager.model';
+export * from './firebase-pager.interface';

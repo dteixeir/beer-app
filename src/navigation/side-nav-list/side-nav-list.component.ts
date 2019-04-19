@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { Routes } from '../../routes';
-import { Route } from './../route.model';
-import * as fromRoot from '../../app/app.reducer';
 import { Store } from '@ngrx/store';
+
+import * as fromRoot from '@fromRoot';
+import { Routes } from '../../routes';
+import { IRoute } from '../route.interface';
 
 @Component({
   selector: 'app-side-nav-list',
@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./side-nav-list.component.scss']
 })
 export class SideNavListComponent implements OnInit {
-  routes: Route[] = Routes;
+  routes: IRoute[] = Routes;
   isAuthenticated$: Observable<boolean>;
 
   constructor(

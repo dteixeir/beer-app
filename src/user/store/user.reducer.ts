@@ -1,8 +1,8 @@
 import { UserActions, UserActionTypes } from './user.actions';
-import { User } from './user.model';
+import { IUser } from './user.interface';
 
 export interface State {
-  user: User;
+  user: IUser;
 }
 
 const initialState: State = {

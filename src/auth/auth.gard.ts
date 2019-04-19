@@ -1,9 +1,8 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route } from '@angular/router';
-import { take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../app/app.reducer';
+import * as fromRoot from '@fromRoot';
 
 @Injectable()
 export class AuthGard implements CanActivate, CanLoad {

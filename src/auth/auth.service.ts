@@ -1,21 +1,21 @@
-import { Store } from '@ngrx/store';
-
-import { UserAuth } from './userAuth.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { RouteNames } from './../routes';
-
-import * as fromRoot from '../app/app.reducer';
-import * as UI from '@shared/ui';
-import * as AUTH from './auth.actions';
-import * as USER from '../user/user.actions';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 
+import { Store } from '@ngrx/store';
+
+import * as UI from '@shared/ui';
 import { BaseService } from '@shared/baseClasses';
 import { UIService } from '@shared/ui';
+
+import { IAuth } from './store/auth.interface';
+import { RouteNames } from './../routes';
+
+import * as fromRoot from '@fromRoot';
+import * as AUTH from './store/auth.actions';
+import * as USER from '../user/store/user.actions';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -59,7 +59,7 @@ export class AuthService extends BaseService {
       }, (error) => this.baseError(error));
   }
 
-  registerUser(userAuth: UserAuth) {
+  registerUser(userAuth: IAuth) {
     this.store.dispatch(new UI.StartLoading());
 
     this.afAuth.auth.createUserWithEmailAndPassword(
@@ -72,7 +72,7 @@ export class AuthService extends BaseService {
     });
   }
 
-  login(userAuth: UserAuth) {
+  login(userAuth: IAuth) {
     this.store.dispatch(new UI.StartLoading());
 
     this.afAuth.auth.signInWithEmailAndPassword(

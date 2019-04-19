@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
+
+import { UIService } from '@shared/ui';
+import { BaseFirebaseService } from '@shared/baseClasses';
+import { ICollectionService } from '@shared/interfaces';
 
 import * as BreweryActions from './store/brewery.actions';
 import * as fromBrewery from './store/brewery.reducer';
 import * as BrewerySelectors from './store/brewery.selectors';
 
-import { UIService } from '../shared/ui/ui.service';
-import { BaseFirebaseService } from '../shared/shared.module';
-import { Router } from '@angular/router';
-import { ICollectionService } from '../shared/interfaces/collection-service.interface';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { IBrewery } from './store';
 
 @Injectable()

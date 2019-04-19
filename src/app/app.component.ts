@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.module';
 import { UserService } from '../user/user.module';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../app/app.reducer';
+import * as fromRoot from './store/app.reducer';
+import { AuthService } from 'src/auth/auth.service';
 
 @Component({
   selector: 'app-root',

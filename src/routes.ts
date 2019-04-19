@@ -1,6 +1,6 @@
-import { Route } from './model.index';
+import { IRoute } from './navigation/route.interface';
 
-const enum RouteNames {
+export const enum RouteNames {
   Signup = '/signup',
   Login = '/login',
   SignOut = '/login',
@@ -8,7 +8,7 @@ const enum RouteNames {
   Beer = '/beer',
 }
 
-const Routes: Route[] = [
+export const Routes: IRoute[] = [
   {
     url: '/signup',
     name: 'Sign Up',
@@ -45,5 +45,3 @@ const Routes: Route[] = [
     dontShowIfAuthenticated: false
   }
 ];
-
-export { RouteNames, Routes };

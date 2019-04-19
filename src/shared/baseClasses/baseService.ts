@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../app/app.reducer';
+import { Store, select } from '@ngrx/store';
+import * as fromRoot from '../../app/store/app.reducer';
 import * as UiActions from '../ui/ui.actions';
 import { UIService } from '../ui/ui.service';
 import { skipWhile } from 'rxjs/operators';
@@ -18,7 +18,10 @@ export class BaseService {
   ) { }
 
   baseInit(): void {
-    this.isAuth$ = this.store.select(fromRoot.getIsAuthenticated).pipe(skipWhile(isAuthenticated => isAuthenticated));
+    this.isAuth$ = this.store.pipe(
+      select(fromRoot.getIsAuthenticated)
+      , skipWhile(isAuthenticated => isAuthenticated)
+    );
   }
 
   baseError(error: Error, message: string = null) {
