@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
 
-import { UIService } from '../shared/ui.service';
+import { UIService } from './ui/ui.service';
 import { BaseController } from './baseClasses/baseController';
 import { BaseService } from './baseClasses/baseService';
 import { BaseFirebaseService } from './baseClasses/baseFirebaseService';

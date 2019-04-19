@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import * as fromBeer from '../beer.reducer';
-import * as beerSelectors from '../beer.selectors';
+import * as fromBeer from '../store/beer.reducer';
+import * as beerSelectors from '../store/beer.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IBeer } from '../../shared/models';
+import { IBeer } from '@fromBeer';
 import { tap } from 'rxjs/operators';
 import { BeerService } from '../beer.service';
 import { ActivatedRoute, Router } from '@angular/router';

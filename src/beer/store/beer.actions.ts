@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IBeer } from '../shared/models';
+import { IBeer } from '@fromBeer';
 
 export enum Types {
   SET_BEERS = '[BEER]_SET_COLLECTION',

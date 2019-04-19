@@ -1,4 +1,4 @@
-<mat-card *ngIf="(brewery$ | async) as brewery">
+<mat-card class="d-flex f-1 flex-column" *ngIf="(brewery$ | async) as brewery">
   <mat-card-title>{{ brewery?.name | titlecase }}</mat-card-title>
   <mat-card-content class="flex-column">
     <div>
@@ -15,24 +15,18 @@
     </div>
     
   </mat-card-content>
-  <!-- turn the beer-collection component into something I can pass params into and reuse then use that HERE! -->
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Beer List
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-  
-    <mat-list *ngIf="(beers$ | async) as items" class="content flex-column" role="list">
-      <mat-list-item *ngFor="let item of items; let last = last"
-        class="d-flex f-1"
-      >
-        {{item.name}}
-        <mat-divider *ngIf="!last"></mat-divider>
-      </mat-list-item>
-    </mat-list>
-  
-  </mat-expansion-panel>
+
+  <h6 mat-subheader>Beer List</h6>
+
+  <mat-list *ngIf="(beers$ | async) as items" class="content flex-column f-flex f-1" role="list">
+    <mat-list-item *ngFor="let item of items; let last = last"
+      class="d-flex f-1 selectable"
+      (click)=select(item)
+    >
+      {{item.name}}
+      <mat-divider *ngIf="!last"></mat-divider>
+    </mat-list-item>
+  </mat-list>
 
   <mat-card-actions class="flex-row" class="button-row">
     <detail-button-bar></detail-button-bar>

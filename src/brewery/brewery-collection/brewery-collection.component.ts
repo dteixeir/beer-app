@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import * as fromBrewery from '../brewery.reducer';
-import * as brewerySelectors from '../brewery.selectors';
+import * as fromBrewery from '../store/brewery.reducer';
+import * as brewerySelectors from '../store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IBrewery } from '../../shared/models';
 import { BreweryService } from '../brewery.service';
 import { MatPaginator } from '@angular/material';
+import { IBrewery } from '../store';
 
 @Component({
   selector: 'app-brewery-collection',

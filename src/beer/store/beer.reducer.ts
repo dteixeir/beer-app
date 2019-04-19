@@ -1,7 +1,7 @@
 import * as BeerActions from './beer.actions';
 
-import { IBeer } from '../shared/models';
-import * as fromRoot from '../app/app.reducer';
+import { IBeer } from '@fromBeer';
+import * as fromRoot from '../../app/app.reducer';
 
 // define new partial store
 export interface BeerState {

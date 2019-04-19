@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app/app.reducer';
-import * as UiActions from '../ui.actions';
-import { UIService } from '../ui.service';
+import * as UiActions from '../ui/ui.actions';
+import { UIService } from '../ui/ui.service';
 import { skipWhile } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 

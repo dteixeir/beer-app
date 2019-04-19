@@ -7,12 +7,12 @@
   <div class="links">
       <a routerLink="/">Beer Snob</a>
   </div>
-  <div class="d-flex" class="links">
+  <!-- <div class="d-flex" class="links">
     <ul class="flex-row" class="navigation-items" >
       <li *ngFor="let route of routes" >
         <a *ngIf="route.showIfAuthenticated === (isAuthenticated$ | async) || route.dontShowIfAuthenticated === !(isAuthenticated$ | async)" 
            routerLink="{{ route.url }}">{{route.name}}</a>
       </li>
     </ul>
-  </div>
+  </div> -->
 </mat-toolbar>

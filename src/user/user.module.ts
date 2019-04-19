@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { UIService } from '../shared/ui.service';
+import { UIService } from '../shared/ui/ui.service';
 import { SharedModule } from '../shared/shared.module';
 
 import { UserService } from './user.service';

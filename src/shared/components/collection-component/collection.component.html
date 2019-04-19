@@ -1,6 +1,12 @@
-<div>
-  <mat-form-field>
-    <input matInput type="text" [(ngModel)]="filterValue" (keyup)="_filter.next($event.target.value)" placeholder="Filter">
+<div class="d-flex row px-2">
+  <mat-form-field class="col-12">
+    <input 
+      matInput 
+      type="text" 
+      [(ngModel)]="filterValue" 
+      (keyup)="_filter.next($event.target.value)" 
+    >
+      <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 </div>
 
@@ -14,7 +20,7 @@
   </mat-list-item>
 </mat-list>
 
-<div class="flex-row">
+<div class="flex-row p-1">
   <button class="flex-start" (click)="previousPage()" [disabled]="hasPreviousPage()" mat-button color="primary">Previous</button>
   <button class="flex-end" (click)="nextPage()" mat-button color="primary">Next</button>
 </div>

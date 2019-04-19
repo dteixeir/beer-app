@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import * as fromBrewery from '../brewery.reducer';
-import * as BrewerySelectors from '../brewery.selectors';
+import * as fromBrewery from '../store/brewery.reducer';
+import * as BrewerySelectors from '../store/brewery.selectors';
 import { Store } from '@ngrx/store';
 import { Observable, forkJoin } from 'rxjs';
 import { tap, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
-import { IBrewery, Brewery, IBeer } from '../../shared/models';
+import { IBeer } from '@fromBeer';
 import { BreweryService } from '../brewery.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { firestore } from 'firebase';
+import { IBrewery } from '../store';
 
 @Component({
   selector: 'app-brewery',
@@ -22,6 +24,7 @@ export class BreweryDetailComponent implements OnInit {
     private store: Store<fromBrewery.State>,
     private breweryService: BreweryService,
     private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -35,9 +38,18 @@ export class BreweryDetailComponent implements OnInit {
     );
 
     this.beers$ = this.brewery$.pipe(
-      distinctUntilChanged((a: Brewery, b: Brewery) => !a || a.name === b.name)
-      , map(brewery => brewery.beerRefs.map(ref => ref.get().then(x => x.data() as IBeer)))
+      distinctUntilChanged((a: IBrewery, b: IBrewery) => !a || a.name === b.name)
+      , map(brewery => brewery.beerRefs.map(ref => ref.get().then(x => {
+        return {
+          ...x.data()
+          , id: ref.id
+        } as IBeer
+      })))
       , switchMap((promises: Promise<IBeer>[]) => forkJoin(promises))
     );
+  }
+
+  select(beer: firestore.DocumentSnapshot) {
+    this.router.navigate(['/beer', beer.id]);
   }
 }

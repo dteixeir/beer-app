@@ -2,6 +2,17 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@fromBeer": [
+        "src/beer/store/index"
+      ],
+      "@fromBrewery": [
+        "src/brewery/store/index"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ]
+    },
     "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

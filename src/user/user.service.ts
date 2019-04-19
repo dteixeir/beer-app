@@ -6,7 +6,7 @@ import { takeUntil, take, skipUntil } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { BaseService } from '../shared/shared.module';
-import { UIService } from '../shared/ui.service';
+import { UIService } from '../shared/ui/ui.service';
 import { User } from './user.model';
 
 import * as fromRoot from '../app/app.reducer';

@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import * as fromBeer from '../beer.reducer';
-import * as beerSelectors from '../beer.selectors';
+import * as fromBeer from '../store/beer.reducer';
+import * as beerSelectors from '../store/beer.selectors';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { IBeer } from '../../shared/models';
+import { IBeer } from '@fromBeer';
 import { BeerService } from '../beer.service';
 import { MatPaginator } from '@angular/material';
 import { tap } from 'rxjs/operators';

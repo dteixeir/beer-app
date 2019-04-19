@@ -1,19 +1,20 @@
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app/app.reducer';
-import * as UiActions from '../ui.actions';
-import { UIService } from '../ui.service';
+import * as UiActions from '../ui/ui.actions';
+import { UIService } from '../ui/ui.service';
 import { map, take, tap, switchMap, debounceTime, takeWhile } from 'rxjs/operators';
-import { IBase, Base } from './base.model';
+import { IBase } from '../interfaces/base.interface';
 import { BaseService } from './baseService';
 import { IFirebasePager } from './firebase-pager.model';
 import { Router } from '@angular/router';
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 
-export class BaseFirebaseService<IItem extends Base> extends BaseService {
+export class BaseFirebaseService<IItem extends IBase> extends BaseService {
   public isAuth$: Observable<boolean>;
   protected pageSize: number = 15;
   protected debounceTime: number = 500;
+  protected orderBy: string = 'name';
 
   private _filterItems: Subject<string> = new Subject();
   private filterItems$ = this._filterItems;
@@ -43,6 +44,12 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
     this.setFilterObservable();
     this.setPageObservable();
   }
+
+  // actions based upon subscriptions
+  // public
+  hasPreviousPage = (): boolean  => this.itemNames.length === 0;
+
+  getFilterValue = () => this.filterValue;
 
   getListByIds(listIds: string[], collectionName: string): Observable<{}> {
     const observables: Observable<{}>[] = [];
@@ -86,7 +93,7 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
     // collection name hard coded!
     this.db
       .collection(this.collectionName, ref => ref
-        .orderBy('name')
+        .orderBy(this.orderBy)
         .limit(this.pageSize)
       ).snapshotChanges()
       .pipe(
@@ -110,10 +117,6 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
     this._filterItems.next(filterValue);
   }
 
-  getFilterValue() {
-    return this.filterValue;
-  }
-
   // ------------------------------------------------------------------
   // collection based functions
   // ------------------------------------------------------------------
@@ -123,7 +126,7 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
     if (filterValue) {
       return this.db
         .collection(this.collectionName, ref => ref
-          .orderBy('name')
+          .orderBy(this.orderBy)
           .limit(this.pageSize)
           .startAt(filterValue)
           .endAt(filterValue + '\uf8ff')
@@ -132,7 +135,7 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
     } else {
       return this.db
         .collection(this.collectionName, ref => ref
-          .orderBy('name')
+          .orderBy(this.orderBy)
           .limit(this.pageSize)
         ).snapshotChanges();
     }
@@ -173,12 +176,6 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
       });
   }
 
-  // actions based upon subscriptions
-  // public
-  hasPreviousPage(): boolean {
-    return this.itemNames.length === 0;
-  }
-
   // private
   private setPageObservable() {
     this.changePage$.pipe(
@@ -186,16 +183,17 @@ export class BaseFirebaseService<IItem extends Base> extends BaseService {
         if (firebasePager.pageDirection === 'next') {
           return this.db
             .collection(this.collectionName, ref => ref
-              .orderBy('name')
+              .orderBy(this.orderBy)
               .limit(this.pageSize)
               .startAfter(firebasePager.name))
             .snapshotChanges();
         } else {
           const name = this.itemNames[this.itemNames.length - 1];
+
           this.itemNames.pop();
           return this.db
             .collection(this.collectionName, ref => ref
-              .orderBy('name')
+              .orderBy(this.orderBy)
               .limit(this.pageSize)
               .startAt(name))
             .snapshotChanges();

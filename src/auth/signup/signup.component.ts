@@ -7,8 +7,7 @@ import * as fromRoot from '../../app/app.reducer';
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: [ './signup.component.scss' ]
+  templateUrl: './signup.component.html'
 })
 export class SignupComponent extends BaseController implements OnInit {
   maxDate: Date;

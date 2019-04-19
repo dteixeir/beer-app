@@ -1,18 +1,17 @@
-import { take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 
-import { IBrewery, Brewery, IBeer } from '../shared/models';
-import * as BreweryActions from './brewery.actions';
-import * as fromBrewery from './brewery.reducer';
-import * as BrewerySelectors from './brewery.selectors';
+import * as BreweryActions from './store/brewery.actions';
+import * as fromBrewery from './store/brewery.reducer';
+import * as BrewerySelectors from './store/brewery.selectors';
 
-import { UIService } from '../shared/ui.service';
+import { UIService } from '../shared/ui/ui.service';
 import { BaseFirebaseService } from '../shared/shared.module';
 import { Router } from '@angular/router';
 import { ICollectionService } from '../shared/interfaces/collection-service.interface';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { IBrewery } from './store';
 
 @Injectable()
 export class BreweryService extends BaseFirebaseService<IBrewery> implements ICollectionService {
@@ -36,7 +35,7 @@ export class BreweryService extends BaseFirebaseService<IBrewery> implements ICo
   }
 
   getBreweryBeers(brewery) {
-    const newBrewery = new Brewery(brewery);
+    const newBrewery: IBrewery = brewery;
     newBrewery.beerRefs[0].get().then(doc => console.log(doc.data()))
     // this.getListByIds(newBrewery.beerRefs, 'beers')
     //   .pipe(take(1))

@@ -16,7 +16,7 @@ import { HeaderComponent } from '../navigation/header/header.component';
 import { SideNavListComponent } from '../navigation/side-nav-list/side-nav-list.component';
 
 import { environment } from './../environments/environment';
-import { UIService } from '../shared/ui.service';
+import { UIService } from '../shared/ui/ui.service';
 import { ModalModule } from '../modals/modal.module';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';

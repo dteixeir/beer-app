@@ -12,7 +12,12 @@ html {
 
   main,
   .brewery-app { 
-    height: calc(100vh - 56px);
+    height: calc(100vh - 64px);
+
+    @media (max-width: 599px) {
+      height: calc(100vh - 56px);
+    }
+
     overflow-y: none;
   }
 }
@@ -75,5 +80,11 @@ mat-list-item {
       display: flex;
       flex: 1;
     }
+  }
+}
+
+button {
+  &:focus {
+    outline: unset;
   }
 }

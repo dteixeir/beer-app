@@ -5,16 +5,17 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RouteNames } from './../routes';
-import { BaseService } from '../shared/shared.module';
-import { UIService } from '../shared/ui.service';
 
 import * as fromRoot from '../app/app.reducer';
-import * as UI from '../shared/ui.actions';
+import * as UI from '@shared/ui';
 import * as AUTH from './auth.actions';
 import * as USER from '../user/user.actions';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+
+import { BaseService } from '@shared/baseClasses';
+import { UIService } from '@shared/ui';
 
 @Injectable()
 export class AuthService extends BaseService {

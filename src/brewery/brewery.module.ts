@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { BreweryService } from './brewery.service';
-import { UIService } from '../shared/ui.service';
+import { UIService } from '../shared/ui/ui.service';
 import { SharedModule } from '../shared/shared.module';
 import { BreweryRoutingModule } from './brewery-routing.module';
 
 import { StoreModule } from '@ngrx/store';
-import { breweryReducer } from './brewery.reducer';
+import { breweryReducer } from './store/brewery.reducer';
 import { BreweryCollectionComponent } from './brewery-collection/brewery-collection.component';
 import { BreweryDetailComponent } from './brewery-detail/brewery-detail.component';
 
