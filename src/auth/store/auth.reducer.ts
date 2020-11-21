@@ -6,7 +6,7 @@ export interface State {
 }
 
 const initialState: State = {
-  isAuthenticated: false
+  isAuthenticated: true
 };
 
 // selectors

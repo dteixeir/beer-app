@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
+import * as fromUI from '@shared/ui';
 import { BaseController } from '@shared/baseClasses';
 
-import { State } from '@fromAuth';
+import { State } from '../store';
 import { AuthService } from '../auth.service';
-import * as fromRoot from '../../app/store/app.reducer';
 
 @Component({
   selector: 'app-login',
@@ -22,10 +22,10 @@ export class LoginComponent extends BaseController<State> implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.baseInit();
+    this.authService.init();
     this.authService.logout();
 
-    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
+    this.isLoading$ = this.store.select(fromUI.getIsLoading);
   }
 
   onSubmit(form: NgForm) {

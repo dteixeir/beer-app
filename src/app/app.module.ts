@@ -11,9 +11,6 @@ import { reducers } from './store/app.reducer';
 import { AuthModule } from '../auth/auth.module';
 import { WelcomeComponent } from '../welcome/welcome.component';
 
-import { HeaderComponent } from '../navigation/header/header.component';
-import { SideNavListComponent } from '../navigation/side-nav-list/side-nav-list.component';
-
 import { environment } from './../environments/environment';
 import { ModalModule } from '../modals/modal.module';
 
@@ -23,6 +20,9 @@ import { UserModule } from '../user/user.module';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { RouterModule, Routes } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
+import { SideNavListComponent } from './side-nav-list/side-nav-list.component';
+import { SharedModule } from '@shared/shared.module';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -38,7 +38,8 @@ const routes: Routes = [
     , SideNavListComponent
   ],
   imports: [
-    UserModule
+    SharedModule
+    , UserModule
     , AuthModule
     , BrowserAnimationsModule
     , BrowserModule

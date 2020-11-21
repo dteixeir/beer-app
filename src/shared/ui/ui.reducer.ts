@@ -1,4 +1,5 @@
 import { UiActions, UiActionTypes } from './ui.actions';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface State {
   isLoading: boolean;
@@ -7,6 +8,9 @@ export interface State {
 const initialState: State = {
   isLoading: false
 };
+
+export const getUiState = createFeatureSelector<State>('ui');
+export const getIsLoading = createSelector(getUiState, (state) => state.isLoading);
 
 export function reducer(state: State = initialState, action: UiActions) {
   switch (action.type) {
@@ -20,5 +24,3 @@ export function reducer(state: State = initialState, action: UiActions) {
       return { ...state };
   }
 }
-
-export const getIsLoading = (state: State) => state.isLoading;

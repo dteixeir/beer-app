@@ -31,7 +31,7 @@ export class BreweryService extends BaseFirebaseService<IBrewery> implements ICo
       'breweries'
     );
 
-    this.baseInit();
+    this.init();
   }
 
   getBreweryBeers(brewery) {

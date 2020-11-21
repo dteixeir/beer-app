@@ -8,6 +8,7 @@ import { MaterialModule } from './material.module';
 import { UIService } from './ui/ui.service';
 
 import * as SharedComponents from './components';
+import { LetAsDirective } from './directives/let-as.directive';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import * as SharedComponents from './components';
   declarations: [
     SharedComponents.CollectionComponent
     , SharedComponents.DetailButtonBarComponent
+    , LetAsDirective
   ],
   exports: [
     CommonModule
@@ -26,6 +28,7 @@ import * as SharedComponents from './components';
     , MaterialModule
     , SharedComponents.CollectionComponent
     , SharedComponents.DetailButtonBarComponent
+    , LetAsDirective
   ],
   providers: [
     UIService

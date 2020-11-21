@@ -9,12 +9,12 @@ import { Store } from '@ngrx/store';
 import * as UI from '@shared/ui';
 import { BaseService } from '@shared/baseClasses';
 import { UIService } from '@shared/ui';
-
-import { IAuth } from './store/auth.interface';
-import { RouteNames } from './../routes';
+import { ROUTE_NAMES } from '@shared/constants';
 
 import * as fromRoot from '@fromRoot';
-import * as AUTH from './store/auth.actions';
+
+import * as fromAuth from './store';
+import * as fromUI from '@shared/ui';
 import * as USER from '../user/store/user.actions';
 
 @Injectable()
@@ -29,37 +29,38 @@ export class AuthService extends BaseService {
   ) {
     super(
       uiService,
-      store,
       db
     );
   }
 
+  stopLoading = () => new fromUI.StopLoading();
+
   initAuthListner() {
-    this.store.select(fromRoot.getIsAuthenticated)
-      .subscribe(data => {
-        if (data) {
-          this.router.navigate([ RouteNames.Brewery ]);
-        } else {
-          // this.router.navigate([ RouteNames.Login ]);
-        }
-      }, (error) => this.baseError(error));
+    // this.store.select(fromRoot.getIsAuthenticated)
+    //   .subscribe(data => {
+    //     if (data) {
+    //       this.router.navigate([ ROUTE_NAMES.Brewery ]);
+    //     } else {
+    //       // this.router.navigate([ RouteNames.Login ]);
+    //     }
+    //   }, (error) => this.baseError(error));
 
     this.afAuth.authState
       .subscribe(user => {
         if (user) {
-          this.store.dispatch(new AUTH.SetAuthenticated());
+          this.store.dispatch(new fromAuth.SetAuthenticated());
           this.store.dispatch(new USER.SetUser({
             userId: user.uid,
             email: user.email
           }));
         } else {
           this.store.dispatch(new USER.SetUser(null));
-          this.store.dispatch(new AUTH.SetUnAuthenticated());
+          this.store.dispatch(new fromAuth.SetUnAuthenticated());
         }
       }, (error) => this.baseError(error));
   }
 
-  registerUser(userAuth: IAuth) {
+  registerUser(userAuth: fromAuth.IAuth) {
     this.store.dispatch(new UI.StartLoading());
 
     this.afAuth.auth.createUserWithEmailAndPassword(
@@ -72,7 +73,7 @@ export class AuthService extends BaseService {
     });
   }
 
-  login(userAuth: IAuth) {
+  login(userAuth: fromAuth.IAuth) {
     this.store.dispatch(new UI.StartLoading());
 
     this.afAuth.auth.signInWithEmailAndPassword(
@@ -91,7 +92,7 @@ export class AuthService extends BaseService {
 
   logout() {
     this.store.dispatch(new USER.SetUser(null));
-    this.store.dispatch(new AUTH.SetUnAuthenticated());
+    this.store.dispatch(new fromAuth.SetUnAuthenticated());
     this.afAuth.auth.signOut();
   }
 }

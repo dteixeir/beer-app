@@ -1,5 +1,6 @@
 import { UserActions, UserActionTypes } from './user.actions';
 import { IUser } from './user.interface';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface State {
   user: IUser;
@@ -8,6 +9,12 @@ export interface State {
 const initialState: State = {
   user: null
 };
+
+export const getUserState = createFeatureSelector<State>('user');
+export const getUser = createSelector(getUserState, (state) => state.user);
+export const getHasUser = createSelector(getUserState, (state) => {
+  return !(!!state.user && !!state.user.userId && state.user.userId !== null );
+});
 
 export function reducer(state: State = initialState, action: UserActions) {
   switch (action.type) {
@@ -22,6 +29,3 @@ export function reducer(state: State = initialState, action: UserActions) {
       return { ...state };
   }
 }
-
-export const getUser = (state: State) => state.user;
-export const getHasUser = (state: State) => !(!!state.user && !!state.user.userId && state.user.userId !== null );

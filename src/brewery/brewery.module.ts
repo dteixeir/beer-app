@@ -11,11 +11,6 @@ import { breweryReducer } from './store/brewery.reducer';
 import { BreweryCollectionComponent } from './brewery-collection/brewery-collection.component';
 import { BreweryDetailComponent } from './brewery-detail/brewery-detail.component';
 
-export {
-  BreweryCollectionComponent,
-  BreweryDetailComponent
-};
-
 const components = [
   BreweryCollectionComponent,
   BreweryDetailComponent

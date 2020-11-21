@@ -30,7 +30,19 @@ export class SetCollectionPage implements Action {
   constructor(public payload: number) {}
 }
 
+export const INCREMENT_PAGE = '[BREWERY] INCREMENT_PAGE';
+export class IncrementPage implements Action {
+  readonly type = INCREMENT_PAGE;
+}
+
+export const DECREMENT_PAGE = '[BREWERY] DECREMENT_PAGE';
+export class DecrementPage implements Action {
+  readonly type = DECREMENT_PAGE;
+}
+
 export type Actions = SetCollection
   | SetSelected
   | SetSelectedBreweryBeers
-  | SetCollectionPage;
+  | SetCollectionPage
+  | IncrementPage
+  | DecrementPage;

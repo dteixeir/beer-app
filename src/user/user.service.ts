@@ -1,59 +1,61 @@
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+
 import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
-import { takeUntil, take, skipUntil } from 'rxjs/operators';
-
-import { Injectable } from '@angular/core';
+import { take, skipUntil } from 'rxjs/operators';
 
 import { UIService } from '../shared/ui/ui.service';
-import { IUser } from './store/user.interface';
+import * as fromUser from './store';
 
-import * as fromRoot from '../app/store/app.reducer';
-import { AngularFirestore } from '@angular/fire/firestore';
+import * as fromUI from '@shared/ui';
+import * as fromAuth from '@fromAuth';
 import { BaseService } from '@shared/baseClasses';
-import { COLLECTIONS } from 'src/constants';
+import { COLLECTIONS } from '@shared/constants';
 
 @Injectable()
 export class UserService extends BaseService {
-  public hasUser$: Observable<IUser>;
+  public hasUser$: Observable<fromUser.IUser>;
 
   constructor(
     protected db: AngularFirestore,
     protected uiService: UIService,
-    protected store: Store<fromRoot.State>
+    protected store: Store<fromUser.State>
   ) {
     super(
       uiService,
-      store,
       db
     );
 
-    this.baseInit();
+    super.init();
   }
 
+  isAuthenticated = () => fromAuth.getIsAuthenticated;
+  stopLoading = () => new fromUI.StopLoading();
+
   checkForUser() {
-    this.store.select(fromRoot.getUser)
+    this.store.select(fromUser.getUser)
       .pipe(
-        skipUntil(this.store.select(fromRoot.getHasUser)),
-        takeUntil(this.isAuth$)
+        skipUntil(this.store.select(fromUser.getHasUser))
       )
       .subscribe(user => {
-        this.db.collection(COLLECTIONS.USERS)
+        this.db
+          .collection(COLLECTIONS.USERS)
           .doc(user.userId)
           .snapshotChanges()
           .pipe(
-            take(1),
-            takeUntil(this.isAuth$)
+            take(1)
           )
           .subscribe(data => {
             if (!data.payload.exists) {
               this.createUserEntity(user);
             }
-          }, (error) => this.baseError(error));
-      }, (error) => this.baseError(error));
+          }, (error) => super.baseError(error));
+      }, (error) => super.baseError(error));
   }
 
-  createUserEntity(user: IUser) {
+  createUserEntity(user: fromUser.IUser) {
     this.db.doc(`users/${user.userId}`).set({
       userId: user.userId,
       email: user.email

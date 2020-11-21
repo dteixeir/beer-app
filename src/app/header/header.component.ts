@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import * as fromRoot from '@fromRoot';
-
-import { Routes } from '../../routes';
-import { IRoute } from '../route.interface';
+import { Store, select } from '@ngrx/store';
+import * as fromAuth from '@fromAuth';
+import { IRoute } from '@shared/interfaces';
+import { ROUTES } from '@shared/constants';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +11,13 @@ import { IRoute } from '../route.interface';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  routes: IRoute[] = Routes;
+  routes: IRoute[] = ROUTES;
   isAuthenticated$: Observable<boolean>;
+  
   @Output() emit = new EventEmitter<void>();
 
   constructor(
-    private store: Store<fromRoot.State>
+    private store: Store<fromAuth.State>
   ) {  }
 
   onEmit(): void {
@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
+    this.isAuthenticated$ = this.store.pipe(
+      select(fromAuth.getIsAuthenticated)
+    );
   }
 }

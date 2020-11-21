@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import * as fromBeer from '../store/beer.reducer';
-import * as beerSelectors from '../store/beer.selectors';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { IBeer } from '@fromBeer';
-import { tap } from 'rxjs/operators';
-import { BeerService } from '../beer.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouteNames } from '../../routes';
+import { Store } from '@ngrx/store';
+
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import * as fromBeer from '../store';
+import { BeerService } from '../beer.service';
+import { ROUTE_NAMES } from '@shared/constants';
 
 @Component({
   selector: 'app-beer-detail',
@@ -17,7 +17,7 @@ import { RouteNames } from '../../routes';
 
 export class BeerDetailComponent implements OnInit {
   isAdmin: boolean = false;
-  item$: Observable<IBeer>;
+  item$: Observable<fromBeer.IBeer>;
   isLoaded: boolean = false;
 
   constructor(
@@ -28,7 +28,7 @@ export class BeerDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.item$ = this.store.select(beerSelectors.getSelected).pipe(
+    this.item$ = this.store.select(fromBeer.getSelected).pipe(
       tap(beer => {
         if (!beer && !this.isLoaded) {
           this.isLoaded = true;
@@ -39,6 +39,6 @@ export class BeerDetailComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate([ RouteNames.Beer ]);
+    this.router.navigate([ ROUTE_NAMES.Beer ]);
   }
 }

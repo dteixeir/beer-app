@@ -4,10 +4,6 @@ import { MaterialModule } from '../shared/material.module';
 
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
-export {
-  ConfirmModalComponent
-};
-
 const components = [
   ConfirmModalComponent
 ];

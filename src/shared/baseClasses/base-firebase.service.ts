@@ -3,18 +3,17 @@ import { Router } from '@angular/router';
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 
 import { Observable, forkJoin, Subject } from 'rxjs';
-import { map, take, tap, switchMap, debounceTime, takeWhile } from 'rxjs/operators';
+import { map, take, tap, switchMap, debounceTime, takeWhile, concatMap, withLatestFrom } from 'rxjs/operators';
 
 import * as fromRoot from '../../app/store/app.reducer';
 import * as UiActions from '../ui/ui.actions';
 import { UIService } from '../ui/ui.service';
 import { IBase } from './base.interface';
-import { BaseService } from './baseService';
+import { BaseService } from './base.service';
 import { IFirebasePager } from './firebase-pager.interface';
+import { IPagerData } from '@fromBrewery';
 
 export class BaseFirebaseService<IItem extends IBase> extends BaseService {
-  public isAuth$: Observable<boolean>;
-  protected pageSize: number = 15;
   protected debounceTime: number = 500;
   protected orderBy: string = 'name';
 
@@ -39,7 +38,6 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
   ) {
     super(
       uiService,
-      store,
       db
     );
 
@@ -47,9 +45,11 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
     this.setPageObservable();
   }
 
+  getPagerData$ = (): Observable<IPagerData> => this.store.select(this.selectors.getPagerData());
+
   // actions based upon subscriptions
   // public
-  hasPreviousPage = (): boolean  => this.itemNames.length === 0;
+  hasPreviousPage = (): boolean => this.itemNames.length === 0;
 
   getFilterValue = () => this.filterValue;
 
@@ -93,19 +93,23 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
     this.store.dispatch(new UiActions.StartLoading());
 
     // collection name hard coded!
-    this.db
-      .collection(this.collectionName, ref => ref
-        .orderBy(this.orderBy)
-        .limit(this.pageSize)
-      ).snapshotChanges()
-      .pipe(
-        tap(val => console.log('fetched items from db')),
-        take(1),
-        this.pipeMapArray()
-      ).subscribe((items: IItem[]) => {
-        this.store.dispatch(new UiActions.StopLoading());
-        this.store.dispatch(new this.actions.SetCollection(items));
-      }, (error) => this.baseError(error, 'Fetching items failed'));
+    this.getPagerData$().pipe(
+      concatMap((data) => {
+        return this.db
+          .collection(this.collectionName, ref => ref
+            .orderBy(this.orderBy)
+            .limit(data.pageSize)
+            .startAt(data.pageNumber * data.pageSize)
+          ).snapshotChanges().pipe(
+            tap(val => console.log('fetched items from db')),
+            take(1),
+            this.pipeMapArray()
+          )
+      })
+    ).subscribe((items: IItem[]) => {
+      this.store.dispatch(new UiActions.StopLoading());
+      this.store.dispatch(new this.actions.SetCollection(items));
+    }, (error) => this.baseError(error, 'Fetching items failed'));
   }
 
   setSelected(item: IItem, selectedRoute: string) {
@@ -156,7 +160,7 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
   }
 
   pageNext() {
-    // this.store.dispatch(new this.a)
+    this.store.dispatch(new this.actions.IncrementPage);
 
     this.store.select(this.selectors.getItems)
       .pipe(
@@ -170,6 +174,8 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
   }
 
   pagePrevious() {
+    this.store.dispatch(new this.actions.DecrementPage);
+
     this.store.select(this.selectors.getItems)
       .pipe(
         take(1),
@@ -183,12 +189,13 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
   // private
   private setPageObservable() {
     this.changePage$.pipe(
-      switchMap((firebasePager: IFirebasePager) => {
+      withLatestFrom(this.getPagerData$())
+      , switchMap(([firebasePager, pagerData]) => {
         if (firebasePager.pageDirection === 'next') {
           return this.db
             .collection(this.collectionName, ref => ref
               .orderBy(this.orderBy)
-              .limit(this.pageSize)
+              .limit(pagerData.pageSize)
               .startAfter(firebasePager.name))
             .snapshotChanges();
         } else {
@@ -198,7 +205,7 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
           return this.db
             .collection(this.collectionName, ref => ref
               .orderBy(this.orderBy)
-              .limit(this.pageSize)
+              .limit(pagerData.pageSize)
               .startAt(name))
             .snapshotChanges();
         }
@@ -216,8 +223,8 @@ export class BaseFirebaseService<IItem extends IBase> extends BaseService {
 
   // map list
   pipeMapArray<T extends IBase>() {
-    return map((data: DocumentChangeAction<{}>[]) => {
-      return data.map((doc: DocumentChangeAction<{}>) => {
+    return map((data: DocumentChangeAction<T>[]) => {
+      return data.map((doc: DocumentChangeAction<T>) => {
         return {
           id: doc.payload.doc.id,
           ...doc.payload.doc.data()

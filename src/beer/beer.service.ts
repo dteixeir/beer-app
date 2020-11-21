@@ -30,6 +30,6 @@ export class BeerService extends BaseFirebaseService<fromBeer.IBeer> implements 
       'beers'
     );
 
-    this.baseInit();
+    this.init();
   }
 }

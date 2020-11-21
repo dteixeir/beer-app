@@ -4,27 +4,27 @@
     "baseUrl": "./",
     "paths": {
       "@fromBeer": [
-        "src/beer/store/index"
+        "src/beer/index"
       ],
       "@fromBrewery": [
-        "src/brewery/store/index"
+        "src/brewery/index"
       ],
       "@shared/*": [
         "src/shared/*"
         , "src/shared/shared.module"
       ],
       "@fromAuth": [
-        "src/auth/store/index"
+        "src/auth/index"
       ],
       "@fromUser": [
-        "src/user/store/index"
+        "src/user/index"
       ],
       "@fromRoot":[
         "src/app/store/index"
       ]
     },
-    "importHelpers": true,
     "outDir": "./dist/out-tsc",
+    "importHelpers": true,
     "sourceMap": true,
     "declaration": false,
     "module": "es2015",
